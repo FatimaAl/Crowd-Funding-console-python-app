@@ -13,7 +13,7 @@ def validateDate(date):
 
 def second_display(user):
     ch = int(input("Please enter the number of the operation you want: \n 1_ Create a Project \n 2_View All Projects  \n 3_Edit Your Projects \n "
-        "4_Delete a Project \n 5_Search For a Project By Date \n 6_LogOUt \n"))
+        "4_Delete a Project \n 5_Search For a Project By Date \n 6_LogOut \n"))
     if ch == 1:
         project = Project()
         project.create()
