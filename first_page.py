@@ -11,7 +11,9 @@ def validateDate(date):
         newDate = input("Enter date in proper format: \n")
         validateDate(newDate)
 
-def second_display(ch, user):
+def second_display(user):
+    ch = int(input("Please enter the number of the operation you want: \n 1_ Create a Project \n 2_View All Projects  \n 3_Edit Your Projects \n "
+        "4_Delete a Project \n 5_Search For a Project By Date \n 6_LogOUt \n"))
     if ch == 1:
         project = Project()
         project.create()
@@ -24,6 +26,7 @@ def second_display(ch, user):
         file.write(listToStr)
         file.write("\n")
         file.close()
+        second_display(user)
     elif ch==2:
         file = open("projects.txt", "r")
         lines = file.readlines()
@@ -35,6 +38,7 @@ def second_display(ch, user):
             print("Project Start Date: ", projectAttr[4])
             print("Project End Date: ", projectAttr[5])
             print("____________________________________________")
+        second_display(user)
     elif ch == 3:
         print("Enter The Name of The Project You Want To Edit: ")
         userID = user[0]
@@ -53,6 +57,7 @@ def second_display(ch, user):
             j += 1
         choice = input()
         Project.editProject(choice)
+        second_display(user)
 
     elif ch == 4:
         print("Enter The Name of The Project You Want To Delete: ")
@@ -72,6 +77,8 @@ def second_display(ch, user):
             j += 1
         choice = input()
         Project.deleteProject(choice, user[0])
+        second_display(user)
+
     elif ch == 5:
         date = input("Enter Date Of The Projects You Want review: \n")
         checkdate = validateDate(date)
@@ -84,11 +91,13 @@ def second_display(ch, user):
             print("Project Start Date: ", project[4])
             print("Project End Date: ", project[5])
             print("____________________________________________")
+            second_display(user)
 
     elif ch == 6:
         pass
 
-def first_display (choice):
+def first_display ():
+    choice = int(input("Please enter the number of the operation you want: \n 1_ Register \n 2_Login \n 3_Quit \n"))
     if choice==1:
         user = Register()
         user.register()
@@ -102,18 +111,13 @@ def first_display (choice):
         file.write(listToStr)
         file.write("\n")
         file.close()
-        return
+        first_display()
     elif choice==2:
         user = Login()
         userInfo = user.login()
-        print(userInfo)
-        ch = int(input("Please enter the number of the operation you want: \n 1_ Create a Project \n 2_View All Projects  \n 3_Edit Your Projects \n "
-                           "4_Delete a Project \n 5_Search For a Project By Date \n"))
-        second_display(ch, userInfo)
+        second_display(userInfo)
+        first_display()
     elif choice==3:
         pass
-    else:
-        first_display()
 
-firstChoice=int(input("Please enter the number of the operation you want: \n 1_ Register \n 2_Login \n 3_Quit \n"))
-first_display(firstChoice)
+first_display()
