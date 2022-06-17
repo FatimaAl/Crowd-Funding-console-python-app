@@ -1,6 +1,15 @@
 from  Register import  Register
 from Login import Login
 from project import Project
+import re
+
+
+def validateDate(date):
+    if re.match(r'^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$', date):
+        return date
+    else:
+        newDate = input("Enter date in proper format: \n")
+        validateDate(newDate)
 
 def second_display(ch, user):
     if ch == 1:
@@ -35,24 +44,48 @@ def second_display(ch, user):
         i=0
         for line in lines:
             projectList = line.split(":")
-            if projectList[i] == userID:
+            if projectList[0] == userID:
                 userProjects.append(projectList[1])
             i+=1
         j=1
-        print(userProjects)
         for project in userProjects:
             print(j, "_", project)
             j += 1
-        choice = int(input())
+        choice = input()
         Project.editProject(choice)
 
     elif ch == 4:
-        pass
+        print("Enter The Name of The Project You Want To Delete: ")
+        userID = user[0]
+        file = open("projects.txt", "r")
+        lines = file.readlines()
+        userProjects = []
+        i = 0
+        for line in lines:
+            projectList = line.split(":")
+            if projectList[0] == userID:
+                userProjects.append(projectList[1])
+            i += 1
+        j = 1
+        for project in userProjects:
+            print(j, "_", project)
+            j += 1
+        choice = input()
+        Project.deleteProject(choice, user[0])
     elif ch == 5:
-        pass
+        date = input("Enter Date Of The Projects You Want review: \n")
+        checkdate = validateDate(date)
+        if checkdate:
+            projects = Project.searchByDate(checkdate)
+        for project in projects:
+            print("Project Title: ", project[1])
+            print("Project Details: ", project[2])
+            print("Project Total Target: ", project[3])
+            print("Project Start Date: ", project[4])
+            print("Project End Date: ", project[5])
+            print("____________________________________________")
+
     elif ch == 6:
-        pass
-    else:
         pass
 
 def first_display (choice):
